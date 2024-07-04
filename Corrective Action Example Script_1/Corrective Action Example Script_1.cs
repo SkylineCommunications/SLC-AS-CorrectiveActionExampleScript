@@ -78,7 +78,9 @@ namespace Corrective_Action_Example_Script_1
             {
                 this.engine = engine;
                 popup = new BroadcastPopupRequestMessage();
-                InitPopup("This is a message", "Title");
+                List<string> groupNames = new List<string>();
+                groupNames.Add("GroupName");
+                InitPopup("This is a message", "Title", new List<string>(), groupNames);
                 LaunchPopup();
                 RunSafe(engine);
             }
@@ -109,10 +111,8 @@ namespace Corrective_Action_Example_Script_1
             }
         }
 
-        public void InitPopup(string message, string title)
+        public void InitPopup(string message, string title, List<string> userNames, List<string> groupNames)
         {
-            string format = "u";
-
             popup.PopupInfo = new PopupInfo
             {
                 Expiration = DateTime.Now.AddMinutes(15),
@@ -120,6 +120,9 @@ namespace Corrective_Action_Example_Script_1
                 Source = Guid.NewGuid(),
                 Title = title,
             };
+
+            //if (userNames != null || !userNames.Equals("none")) popup.PopupInfo.UserNames = userNames;
+            if (groupNames != null || !groupNames.Equals("none")) popup.PopupInfo.GroupNames = groupNames;
         }
 
         public void LaunchPopup()
